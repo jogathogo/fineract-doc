@@ -1,0 +1,291 @@
+This document describes the step by step process required to be followed for releasing new versions of Apache Fineract. This documentation is for the non-CN project; CN releasing is documented elsewhere.
+
+Specifically, following this process turns the source code that is available on https://github.com/apache/fineract/ into a binary release ZIP available on http://fineract.apache.org, and produces the required Release Notes of what's great and new.
+
+This page should be kept up-to-date and improved for each release by the Release Manager (RM) as they come across aspects of the release process not yet (or wrongly) documented here.
+
+== Process
+Apache Process
+The herein documented Apache Fineract release process is, obviously, based on the overall process customary at Apache, which people working on a release are expected to have read and understood:
+
+** http://www.apache.org/dev/#releases
+** https://www.apache.org/legal/release-policy.html
+** https://infra.apache.org/release-distribution.html
+** https://infra.apache.org/release-publishing.html
+** https://infra.apache.org/release-download-pages.html
+** https://infra.apache.org/release-signing.html
+
+Note that the Apache Fineract project does not release any artifacts to Apache's Maven repository. (Because the project does not provide any libraries, only a ZIP file of the full application end users will directly run.)
+
+== Prerequisites (incl. required tools)
+
+Every release needs to have 1 named primary release manager, who coordinates and takes ownership for driving the process described on this page. She/he could, of course, work together with others.  Executing this release process requires:
+
+** dev@fineract.apache.org mailing list membership (and past activity, for credibility..)
+** Apache Confluence Wiki Edit permission (for contributing to e.g. improving this page and creating the release notes overview page)
+** Apache JIRA full permission (for moving issues to the next release)
+** git committer privileges (for creating tags)
+** familiarity with locally building the Fineract code (for creating the release ZIP)
+** PMC membership (for uploading the release ZIP) - this can of course be delegated
+** familiarity with PGP/GPG (for digitally signing the release ZIP)
+
+== Release steps
+
+=== Chose Release Manager (RM)
+
+The project may have different release managers for different releases, and it is usually useful (wink) to first reach agreement on who is actually willing to act as the next release manager. This informal discussion can happen on the public email list, or initially possibly on private email exchanges. All subsequent formal release related emails, using the templates from this documented process, are obviously held on the public developer mailing list, only.
+
+The release manager needs to be able to have all required prerequisites listed above (notably the PGP/GPG set up, which can be a bit tricky at first).
+
+=== Giving the initial heads up
+The RM should, if one doesn't already exist, first create a new release umbrella issue in JIRA. This issue is dedicated to tracking (a summary of) any discussion related to the planned new release. An example of such an issue is FINERACT-873 - Release Apache Fineract v1.4.0 RESOLVED .
+
+The RM then creates an list of resolved issues & features through an initial check in JIRA for already resolved issues for the release, and then setup a timeline for release branch point. The time for the day the issue list is created to the release branch point must be at least two weeks in order to give the community a chance to prioritize and commit any last minute features and issues they would like to see in the upcoming release.
+
+The RM must then send the pointer to the umbrella issue along with the tentative timeline for branch point to the developer lists. Any work identified as release related that needs to be completed should be added as a sub tasks of the umbrella issue to allow all developers and users to see the overall release progress in one place. The umbrella issue shall also link to any issues still requiring clarification whether or not they will make it into the release.
+
+The RM should then inform users when the git branch is planned to be created, by sending an email based on this template:
+[attributes]
+====
+To: dev@fineract.apache.org
+Subject: Fineract $RELEASE release branch
+
+Hello everyone,
+
+Based on our "How to Release Apache Fineract" process documented at https://cwiki.apache.org/confluence/x/DRwIB :
+
+I will create a $release branch off develop in our git repository at https://github.com/apache/fineract on $date.
+
+The release tracking umbrella issue for tracking all activity in JIRA is FINERACT-jira# for this Fineract $RELEASE. 
+
+If you have any work in progress that you like to see included in this release, please add "blocking" links to the release JIRA issue.
+
+I am the release manager for this release.
+
+Thanks, 
+
+$RM
+====
+
+=== Cleaning up JIRA
+
+Before a release is done, make sure that any issues that are fixed have their fix version setup correctly.
+
+[attributes]
+====
+project = fineract and resolution = fixed and fixVersion is empty
+====
+
+Move all unresolved JIRA issues which have this release as Fix Version to the next release
+[attributes]
+====
+project = fineract and fixVersion = $RELEASE and status not in ( Resolved, Done, Accepted, Closed )
+====
+
+You can also run the following query to make sure that the issues fixed for the to-be-released version look accurate:
+[attributes]
+====
+project = fineract and fixVersion = '$RELEASE'
+====
+
+Finally, check out the output of the JIRA  link:https://issues.apache.org/jira/secure/ConfigureReleaseNote.jspa?projectId=12319420[release note tool] to see which JIRAs are included in the release, in order to do a sanity check.
+
+=== Creating Release Branch
+
+Communicate with the community
+
+You do not need to start a new email thread on the developer mailing list to notify that you are about to branch, just do it ca. 2 weeks after the initial email, or later, based on the discussion on the initial email.
+
+You do not need to ask committers to hold off any commits until you have branched finished, as it's always possible to fast-forward the branch to latest develop, or cherry-pick last minute changes to it. People should be able to continue working on the develop branch on bug fixes and great new features for the next release while the release process for the current release is being worked through.
+
+Clone fresh repository copy
+[attributes]
+====
+% git clone git@github.com:apache/fineract.git
+
+% cd fineract
+====
+
+Check that current HEAD points to commit on which you want to base new  release branch.  Checkout a particular earlier commit if not.
+
+[attributes]
+====
+% git log # Check current branch history. HEAD should point to commit that you want to be base for your release branch
+====
+
+Create a new release branch with name "$Version"
+[attributes]
+====
+% git checkout -b $RELEASE
+====
+
+Push new branch to Apache Fineract repository
+[attributes]
+====
+% git push origin $RELEASE
+====
+
+Add new release notes in Release Folders
+
+The change list can be swiped from the  link:https://issues.apache.org/jira/secure/ConfigureReleaseNote.jspa?projectId=12319420[JIRA release note tool] (use the "text" format for the change log). See JIRA Cleanup above to ensure that the release notes generated by this tool are what you are expecting.
+
+Send en email announcing the new release branch on the earlier email thread
+[attributes]
+====
+To: dev@fineract.apache.org
+Subject: Re: Fineract $RELEASE release branch
+
+As previously announced, I've just created the release branch for our upcoming $RELEASE release.  
+
+You can continue working and merging PRs to the develop branch for future releases, as always.
+
+The DRAFT release notes are on https://cwiki.apache.org/confluence/display/FINERACT/$RELEASE+-+Apache+Fineract.  Does anyone see anything missing?
+
+Does anyone have any last minutes changes they would like to see cherry-picked to branch $RELEASE, or are we good go and actually cut the release based on this branch as it is?
+
+I'll initial the final stage of actually creating the release in 3 days if nobody objects.
+
+Thanks,
+$RM
+====
+
+With the release branch we draw a line in the sand, but development on the develop branch will usually continue after the release branch is created. If changes on develop need to be included in the still open release branch then do so by cherry picking selectively.
+
+Cherry picking should only happen from the develop branch, i. e. do not pick changes from PRs that are not yet merged. That way we ensure that we don't pick up anything too experimental or just plain not working.
+
+== Freeze JIRA, create release tag, build distribution, digitally sign it, upload it to dist/dev (staging), call for PMC vote
+
+Approx. 3 days after having sent the email above, if there are no objections, start the final step of actually releasing.
+
+=== Close JIRA version
+
+You first need to close the release in JIRA so that the about to be released version cannot be used as "fixVersion" for new bugs anymore. Go to JIRA "Administer project" page and follow "Versions" in left menu. Table with list of all releases should appear, click on additional menu on the right of your release and choose "Release" option. Submit release date and you're done.
+
+=== Tag release branch
+
+Next, you create a git tag from the HEAD of the release's git branch.
+
+[attributes]
+====
+% git checkout $RELEASE
+
+% git tag -a $RELEASE -m "Fineract $RELEASE release"
+
+#Make sure compiles/tests run fine and rat check is fine (% cd fineract-provider, % gradlew clean integrationTest); run additonally manual tests with the community app
+
+% git push origin $RELEASE
+====
+
+
+Create source and binary artifacts. The steps are defined in Release Sign
+
+=== Sanity Check
+
+Make sure the tar and the release branch match
+
+[attributes]
+====
+% cd /fineract-release-preparations
+
+% tar -xvf apache-fineract-$RELEASE-src.tar.gz
+
+#Do a fresh clone of the tag
+
+% git clone https://git-wip-us.apache.org/repos/asf/fineract.git
+
+% cd fineract/
+
+% git checkout tags/$RELEASE
+
+% cd ..
+
+% diff -r fineract apache-fineract-$RELEASE-src
+
+====
+
+Make sure code compiles and tests pass on the uncompressed source.
+
+[attributes]
+====
+#Make sure prerequisites are met before running these commands
+
+% cd apache-fineract-$RELEASE-src/fineract-provider
+
+% gradlew clean integrationTest (For running integration tests)
+
+% gradlew clean build (For building deploy able war)
+
+% gradlew rat (For RAT checks)
+====
+
+
+Create signatures and check sums
+
+All release artifacts must be signed. In order to sign a release you will need a PGP key. You should get your key signed by a few other people. You will also need to receive their keys from a public key server.   See the Apache release signing page for more details. Please follow the steps defined in Release Sign.
+
+Upload binary and source archives to ASF's distribution dev (staging) area
+
+[attributes]
+====
+% svn co https://dist.apache.org/repos/dist/dev/fineract/ fineract-dist-dev
+
+% mkdir fineract-dist-dev/$RELEASE
+
+% cp fineract/build/distributions/* fineract-dist-dev/$RELEASE/
+
+% svn commit
+====
+
+
+The password for the Authentication realm: <https://dist.apache.org:443> ASF Committers which svn commit will require is your regular ASF Authentication credential.
+
+Verifying a release candidate
+
+Following are the typical things we need to verify before voting on a release candidate. And the release manager should verify them too before calling out a vote.
+
+** Make sure release artifacts are hosted @https://dist.apache.org/repos/dist/dev/fineract/
+** Release candidates should be in format apache-$project-$version.tar.gz 
+** Verify signatures and hashes.  You may have to import the public key of the release manager to verify the signatures. (gpg --recv-key <key id>)
+** git tag matches the released bits (diff -rf)
+** Can compile successfully from source
+** Verify DISCLAIMER, NOTICE and LICENSE (year etc)
+** All files have correct headers (Rat check should be clean - gradlew rat)
+** No jar files in the source artifacts
+** Integration tests should work.
+ 
+Running the vote
+
+Voting has to be done on dev@fineract.apache.org. You can close the vote after voting period expires and you accumulate sufficient votes.
+
+Call for voting on dev list (PMC)
+
+[attributes]
+====
+To: dev@fineract.apache.org
+Subject: [VOTE] [APACHE FINERACT] $RELEASE for release
+
+Hello,
+
+We have created Apache Fineract $RELEASE release, with the artifacts below up for a vote.
+
+It fixes the following issues: https://cwiki.apache.org/confluence/display/FINERACT/$RELEASE+-+Apache+Fineract
+
+Source & Binary files : https://dist.apache.org/repos/dist/dev/fineract/$RELEASE/
+
+Tag to be voted on (rc#): https://git-wip-us.apache.org/repos/asf?p=fineract.git;a=commit;h=refs/heads/$RELEASE
+
+Fineract's KEYS containing the PGP key we used to sign the release: https://dist.apache.org/repos/dist/dev/fineract/KEYS
+
+Note that this release contains source and binary artifacts.
+
+This vote will be open for 72 hours:
+
+[ ] +1 approve
+
+[ ] +0 no opinion
+
+[ ] -1 disapprove (and reason why)
+
+Thanks,
+$RM 
+====

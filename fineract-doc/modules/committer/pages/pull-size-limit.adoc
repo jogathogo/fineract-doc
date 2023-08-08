@@ -1,0 +1,3 @@
+== Pull Request Size Limit
+
+This project does not accept "code dumps" - i.e. massive huge Pull Requests of major new features consisting of thousands of lines of new code, typically developed in "downstream" closed source munged into a single PR, because such contributions are typically simply impossible to code review realistically. Instead, please engage in the usual open source way of proposing small incremental changes leading up to bigger new features.
