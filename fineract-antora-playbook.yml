@@ -6,7 +6,7 @@ content:
   sources:
   #- url: https://github.com/apache/fineract.git
   - url: /Users/TRUMinistries/fineract-template
-    #branches: [develop]
+    branches: [FINERACT-1966]
     start_path: fineract-doc
 ui:
   bundle:
