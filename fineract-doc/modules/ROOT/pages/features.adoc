@@ -26,7 +26,6 @@ Fineract has a wide range set of features necessary to run a myriad of financial
 
 image:organization.png[Organization configuration features]
 
-
 === Offices
 This feature is used to setup the organization office hierarchy that represents the physical office structure. By default, the head office will be available. The platform supports children of children hierarchy, for example: Head office/Regional office/Sub region office/Office/Field office
 
