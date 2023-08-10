@@ -12,4 +12,5 @@ ui:
   bundle:
     url: ui-bundle.zip
     snapshot: true
-    
+    #origin  https://github.com/FITER1/fineract-template.git (fetch)
+#origin  https://github.com/FITER1/fineract-template.git (push)
