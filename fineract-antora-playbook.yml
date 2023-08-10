@@ -4,8 +4,8 @@ site:
   start_page: modules::index.adoc
 content:
   sources:
-  #- url: https://github.com/apache/fineract.git
-  - url: /Users/TRUMinistries/fineract-template
+  - url: https://github.com/jogathogo/fineract-doc.git
+  #- url: /Users/TRUMinistries/fineract-template
     branches: [FINERACT-1966]
     start_path: fineract-doc
 ui:

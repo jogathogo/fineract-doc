@@ -1,3 +1,5 @@
+= FAQs
+
 == What is this project about? 
 At Apache Fineract, our mission is to build, maintain and enhance a cloud-ready core banking system for robust, scalable, and secure operations of financial institutions.  We believe in financial services for everyone, including the unbanked and underbanked.
 

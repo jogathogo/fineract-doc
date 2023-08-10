@@ -1,3 +1,5 @@
+= Features
+
 == Headless architecture
 
 Fineract is a groundbreaking open-source platform that reimagines financial software architecture through a "headless" design. This approach separates the frontend user interface from the backend logic, resulting in remarkable adaptability.
@@ -312,7 +314,7 @@ Table below shows supported fee types for deposit, loan, shares and client accou
 
 == Accounting
 
-image:accounting.png[Accounting,border=10px solid black]
+image:accounting.jpg[Accounting,border=10px solid black]
 
 Accounting is fully supported for customer related transactions i.e all transactions in savings, deposits, loan and fees result atleast one journals entry with the priciple of double entry being adhered to.
 
