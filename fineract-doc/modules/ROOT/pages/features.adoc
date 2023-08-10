@@ -325,6 +325,26 @@ The accounting module allows for:
 * Creation of manual journal entries
 * Frequent posting by creating accounting rules
 
+=== Chart of accounts
+
+image:chart-of-accounts.png[Chart of accounts]
+
+The chart of accounts feature allows creation and management of the chart of accounts which supports multiple level accounts i.e parent/child/grandchild and so on.
+
+GL accounts can be disabled, deleted or modified by a user with the relevant permissions. Deletion of a GL account is only possible if the account does not have journal entries.
+
+=== Create journal entries
+image:add-journal-entries.png[Add journal entries]
+
+This feature allows creation/reversal of manual journal entries. Customer transactions journal entries are referred to as system entries in fineract and are fully automated.
+
+Manual journal entries are useful when making adjustments or recording non customer journals such as admin expenses, salary payments and so on.
+
+=== Search journal entries
+image:search-journal-entries.png[Search journal entries]
+
+Journal entries can be searched using the following filters: date from/to, transaction id, office, GL account name, manual or system entry.
+
 === Loan provisioning
 The system supports configuration of loan provisioning criteria where a % of the outstanding principal is set aside based on the number of days in arrears.
 
