@@ -1,4 +1,5 @@
 .Project Overview
 * xref:index.adoc[Introduction]
+* xref:quick-start.adoc[Quick start]
 * xref:features.adoc[Features]
 * xref:faq.adoc[FAQs]

@@ -1,0 +1,9 @@
+= Getting started
+
+== Quick install
+
+== API reference
+
+== Integrating pentaho
+
+== Install reference UI(Mifos)
