@@ -10,7 +10,7 @@ image:headless-architecture.png[Headless architecture]
 
 Fineract has a wide range set of features necessary to run a myriad of financial institutions, from traditional banks to the more modern neo banks and embedded banking. For brevity of this documentation, these have been grouped into the followung functions:
 
-** Organization configurations
+** Organization configuration
 ** System administration
 ** Products management
 ** Accounting and finance
