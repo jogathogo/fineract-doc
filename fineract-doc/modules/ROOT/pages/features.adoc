@@ -22,7 +22,7 @@ Fineract has a wide range set of features necessary to run a myriad of financial
 ** Reports
 
 
-== Organization configurations
+== Organization configuration
 
 image:organization.png[Organization configuration features]
 
