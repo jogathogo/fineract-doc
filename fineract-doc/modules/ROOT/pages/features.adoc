@@ -4,7 +4,7 @@ Fineract is a groundbreaking open-source platform that reimagines financial soft
 
 At its core, Fineract's headless architecture offers a distinctive advantage by enabling diverse frontends to interact seamlessly with a consistent backend. This flexibility enables tailored user experiences, as different interfaces for web, mobile, and more can be developed independently without affecting core functionalities. Scalability is also enhanced, as resources can be optimized for specific components.
 
-image:headless-architecture.png[Headless architecture]
+image:headless-application.png[Headless application]
 
 == Supported Features
 
