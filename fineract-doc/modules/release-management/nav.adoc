@@ -1,0 +1,2 @@
+.Release process
+* xref:release-process.adoc[Release process]

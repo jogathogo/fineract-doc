@@ -1,2 +1,5 @@
 .Committer Zone
 * xref:becoming-a-committer.adoc[Becoming a Committer]
+* xref:code-review-guideline.adoc[Code review guideline]
+* xref:pull-request-processing.adoc[Pull request processing]
+* xref:pull-size-limit.adoc[Pull size limit]
